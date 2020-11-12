@@ -1,0 +1,61 @@
+#siapkan volume awal untuk sourcecode dan logs juga path general
+prep:
+    #download dulu docker image debian untuk dipakai container lainnya
+    build: preparation
+    volumes:
+      - ./lontar_sms:/var/www
+      - ./log/laravel:/var/www/storage/logs
+    tty: true
+#siapkan container nginx
+nginx:
+    build: nginx
+    restart: always
+    volumes_from:
+        - prep
+    volumes:
+        - ./log/nginx:/var/log/nginx
+    ports:
+        - 81:80
+    links:
+        - php
+#container redis
+#redis:
+#    image: redis:alpine
+#    ports:
+#        - 6379:6379
+#container mariadb
+db:
+    image: mariadb:latest
+    environment:
+        MYSQL_USER: root
+        MYSQL_PASSWORD: 
+        MYSQL_ROOT_PASSWORD: 
+    ports:
+        - 3307:3306
+    volumes:
+        - ./database:/var/lib/mysql
+#container php
+php:
+    build: fpm
+    environment:
+        MAIL_ENCRYPTION: 0
+        MAIL_PRETEND: 0
+        MAIL_USERNAME: null
+        MAIL_PASSWORD: null
+    volumes_from:
+        - prep
+    links:
+        - db
+#        - redis
+#loadbalancer:
+#    image: dockercloud/haproxy
+#    links:
+#        - nginx
+#    ports:
+#      - 80:80
+#      - 1936:1936
+#    volumes:
+#        - ./log/haproxy/docker.sock:/var/run/docker.sock
+#    environment:
+#        - BACKEND_PORT=80
+#        - BALANCE=roundrobin

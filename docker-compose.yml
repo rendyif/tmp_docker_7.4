@@ -25,13 +25,14 @@ nginx:
 #        - 6379:6379
 #container mariadb
 db:
-    image: mariadb:latest
+    image: mariadb
+    restart: always
     environment:
-        MYSQL_USER: root
-        MYSQL_PASSWORD: 
-        MYSQL_ROOT_PASSWORD: 
+      	MYSQL_ROOT_PASSWORD: 123456789
+     	MYSQL_USER: mydb
+     	MYSQL_PASSWORD: 123456
     ports:
-        - 3307:3306
+        - 3306:3306
     volumes:
         - ./database:/var/lib/mysql
 #container php

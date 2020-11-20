@@ -8,7 +8,9 @@ RUN apt-get install -y apt-transport-https ca-certificates curl
 RUN echo "deb https://deb.nodesource.com/node_6.x jessie main" >> /etc/apt/sources.list.d/nodesource.list
 RUN echo "deb-src https://deb.nodesource.com/node_6.x jessie main" >> /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update 
-RUn  apt-get install -y nginx
+RUN apt-get install -y nginx
+RUN apt-get update
+RUN apt-get install -y nano
 
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 RUN apt update

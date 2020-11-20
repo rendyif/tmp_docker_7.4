@@ -20,7 +20,9 @@ RUN composer --version
 RUN rm /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 RUN "date"
-
+#Get Nano
+RUN apt-get update
+RUN apt-get install -y nano
 # Set working directory
 WORKDIR /var/www
 

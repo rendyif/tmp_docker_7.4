@@ -2,6 +2,7 @@
 prep:
     #download dulu docker image debian untuk dipakai container lainnya
     build: preparation
+    restart: always
     volumes:
       - ./lontar_sms:/var/www
       - ./log/laravel:/var/www/storage/logs
@@ -38,6 +39,7 @@ db:
 #container php
 php:
     build: fpm
+    restart: always
     environment:
         MAIL_ENCRYPTION: 0
         MAIL_PRETEND: 0
